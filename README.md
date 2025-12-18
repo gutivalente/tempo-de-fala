@@ -1,5 +1,6 @@
 # Como usar
 
+- [Baixe o zip](https://github.com/gutivalente/tempo-de-fala/archive/refs/heads/main.zip) e extraia;
 - Abra o arquivo **index.html** com um navegador (testado no Firefox e Chrome);
 - Digite um valor em minutos e aperte **Enter** ou **Espaço** para iniciar o temporizador;
   - Ao chegar na metade do tempo ele mostra a mensagem "metade";
