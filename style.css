@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'FOT-NewRodin Pro';
+  src: url('font/FOT-NewRodin Pro L.otf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'FOT-NewRodin Pro';
+  src: url('font/FOT-NewRodin Pro M.otf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'FOT-NewRodin Pro';
+  src: url('font/FOT-NewRodin Pro DB.otf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'FOT-NewRodin Pro';
+  src: url('font/FOT-NewRodin Pro EB.otf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'FOT-NewRodin Pro';
+  src: url('font/FOT-NewRodin Pro UB.otf');
+  font-weight: 800;
+}
+
+#bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+  font-size: clamp(100px, 20vw, 230px);
+  font-family: 'FOT-NewRodin Pro';
+  font-weight: bold;
+  text-align: center;
+  transition: ease background-color 1s;
+  flex-direction: column;
+  height: 97.5%;
+  border: solid #fff 4px;
+  border-radius: 6px;
+
+  &.finish {
+    background-color: #d00;
+  }
+}
+
+#bar-border {
+  width: 85%;
+  height: clamp(12px, 4vw, 20px);
+  padding: 4px;
+  border: solid 4px;
+  border-color: inherit;
+  border-radius: 6px;
+}
+
+#bar {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  transition: linear width 1s;
+}
+
+#message {
+  font-size: clamp(45px, 5vw, 90px);
+  color: inherit;
+  cursor: default;
+  user-select: none;
+}
+
+#bg.half {
+  color: #ff0;
+  border-color: #ff0;
+
+  #bar {
+    background-color: #ff0;
+  }
+}
+
+#bg.almost {
+  color: #f80;
+  border-color: #f80;
+
+  #bar {
+    background-color: #f80;
+  }
+}
+
+#bg.over {
+  color: #f00;
+  border-color: #f00;
+
+  #bar-border {
+    border-color: #f00;
+  }
+
+  #message {
+    animation: blink 0.5s steps(1, start) infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    visibility: hidden;
+  }
+}
+
+.display-inputs {
+  display: flex;
+  color: inherit;
+  margin-bottom: 0.3em;
+
+  #sec-span {
+    width: 1.66em;
+    height: 1em;
+    cursor: default;
+    user-select: none;
+    line-height: 1;
+  }
+
+  #dots {
+    width: 0.5em;
+    height: 1em;
+    cursor: default;
+    user-select: none;
+    line-height: 1;
+  }
+
+  input {
+    width: 1.66em;
+    height: 1em;
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: inherit;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+  }
+}
+
+#reset-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  visibility: hidden;
+  position: absolute;
+  bottom: 64px;
+
+  &.visible {
+    visibility: visible;
+  }
+}
