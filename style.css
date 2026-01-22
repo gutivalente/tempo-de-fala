@@ -65,6 +65,10 @@
   transition: linear width 1s;
 }
 
+#bar.no-transition {
+  transition: none;
+}
+
 #message {
   font-size: clamp(45px, 5vw, 90px);
   color: inherit;

@@ -35,10 +35,23 @@ document.addEventListener('click', e => {
   minInput.focus();
 });
 
-// faz botão recarregar a página sem cache
-resetBtn.addEventListener('click', e => {
-  window.location.reload(true);
-})
+// reseta o tempo
+function resetTimer() {
+  min = 0;
+  sec = 0;
+  totalSec = getTotalSecs();
+  minInput.disabled = false;
+  resetBtn.classList.remove('visible');
+  minInput.value = '';
+  bg.className = '';
+  message.innerHTML = '&nbsp;';
+  secSpan.innerHTML = '00';
+  bar.classList.add('no-transition');
+  bar.style.width = '100%';
+  setTimeout(() => {
+    bar.classList.remove('no-transition');
+  }, 0);
+}
 
 // retorna o total de segundos
 function getTotalSecs() {
@@ -82,6 +95,11 @@ function timerDecrease() {
     }
 
   }, 1000);
+
+  resetBtn.addEventListener('click', e => {
+    clearInterval(intervalDecrease);
+    resetTimer();
+  })
 }
 
 // faz o marcador funcionar como um cronômetro
@@ -113,4 +131,9 @@ function timerIncrease() {
     }
 
   }, 1000);
+
+  resetBtn.addEventListener('click', e => {
+    clearInterval(intervalIncrease);
+    resetTimer();
+  })
 }
