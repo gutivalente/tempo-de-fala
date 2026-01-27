@@ -65,6 +65,44 @@
   transition: linear width 1s;
 }
 
+.dots {
+  width: 0.5em;
+  height: 1em;
+  cursor: default;
+  user-select: none;
+  line-height: 1;
+}
+
+.display-inputs-overall {
+  display: flex;
+  color: inherit;
+  font-size: 0.25em;
+  position: absolute;
+  top: 3%;
+
+  input {
+    width: 1.8em;
+    height: 1em;
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: inherit;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+  }
+}
+
 #bar.no-transition {
   transition: none;
 }
@@ -120,14 +158,6 @@
 
   #sec-span {
     width: 1.66em;
-    height: 1em;
-    cursor: default;
-    user-select: none;
-    line-height: 1;
-  }
-
-  #dots {
-    width: 0.5em;
     height: 1em;
     cursor: default;
     user-select: none;

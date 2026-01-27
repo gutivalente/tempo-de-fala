@@ -1,30 +1,57 @@
 const bg = document.querySelector('#bg');
-const minInput = document.querySelector('#minInput');
+const hourInputOverall = document.querySelector('#hour-input-overall');
+const minInputOverall = document.querySelector('#min-input-overall');
+const minInput = document.querySelector('#min-input');
 const secSpan = document.querySelector('#sec-span');
 const bar = document.querySelector('#bar');
 const message = document.querySelector('#message');
 const resetBtn = document.querySelector('#reset-btn');
 
+let hoursLeft = 0;
+let minsLeft = 0;
+let timerOverallIsSet = false;
 let min = 0;
 let sec = 0;
 let totalSec = 0;
 
 // garante 2 dígitos no campo
-minInput.addEventListener('keydown', e => {
-  if (e.target.value.length > 2) {
-    e.target.value = e.target.value.substr(-2, 2);
-  } else if (e.target.value.length < 2) {
-    e.target.value = e.target.value.toString().padStart(2, '0');
-  }
+[hourInputOverall, minInputOverall, minInput].forEach(input => {
+  input.addEventListener('keydown', e => {
+    if (e.target.value.length > 2) {
+      e.target.value = e.target.value.substr(-2, 2);
+    } else if (e.target.value.length < 2) {
+      e.target.value = e.target.value.toString().padStart(2, '0');
+    }
+  });
 });
 
 // dá play quando aperta enter ou espaço
 document.addEventListener('keydown', e => {
-  if ((e.keyCode === 13 || e.keyCode === 32) && !minInput.disabled && minInput.value >= 1) {
-    min = +document.querySelector('#minInput').value - 1;
+  if (!timerOverallIsSet) {
+    const currentTime = new Date();
+    hoursLeft = hourInputOverall.value - currentTime.getHours();
+    minsLeft = minInputOverall.value - currentTime.getMinutes();
+
+    if (minsLeft < 0) {
+      minsLeft = minsLeft + 60;
+      hoursLeft = hoursLeft - 1;
+    }
+  }
+
+  if ((e.code === 'Enter' || e.code === 'Space') && !minInput.disabled && minInput.value >= 1) {
+    hourOverall = +document.querySelector('#hour-input-overall').value;
+    minOverall = +document.querySelector('#min-input-overall').value;
+
+    min = +document.querySelector('#min-input').value - 1;
     sec = 59;
+    hourInputOverall.value = digits(hoursLeft);
+    minInputOverall.value = digits(minsLeft);
     totalSec = getTotalSecs();
     timerDecrease();
+    timerOverallDecrease();
+    hourInputOverall.disabled = 'true';
+    minInputOverall.disabled = 'true';
+    timerOverallIsSet = true;
     minInput.disabled = 'true';
     resetBtn.classList.add('visible');
   }
@@ -32,7 +59,9 @@ document.addEventListener('keydown', e => {
 
 // foca no campo ao clicar em qualquer lugar
 document.addEventListener('click', e => {
-  minInput.focus();
+  if (timerOverallIsSet) {
+    minInput.focus();
+  }
 });
 
 // reseta o tempo
@@ -100,6 +129,26 @@ function timerDecrease() {
     clearInterval(intervalDecrease);
     resetTimer();
   })
+}
+
+// faz o marcador de cima funcionar como um temporizador
+function timerOverallDecrease() {
+  minsLeft--;
+  var intervalOverallDecrease = setInterval(() => {
+
+    hourInputOverall.value = digits(hoursLeft);
+    minInputOverall.value = digits(minsLeft);
+
+    minsLeft--;
+    if (minsLeft < 0) {
+      hoursLeft--;
+      if (hoursLeft < 0) {
+        clearInterval(intervalOverallDecrease);
+      } else {
+        minsLeft = 59;
+      }
+    }
+  }, 61000);
 }
 
 // faz o marcador funcionar como um cronômetro
