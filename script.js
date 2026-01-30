@@ -5,6 +5,7 @@ const minInput = document.querySelector('#min-input');
 const secSpan = document.querySelector('#sec-span');
 const bar = document.querySelector('#bar');
 const message = document.querySelector('#message');
+const playBtn = document.querySelector('#play-btn');
 const resetBtn = document.querySelector('#reset-btn');
 
 let hoursLeft = 0;
@@ -25,8 +26,23 @@ let totalSec = 0;
   });
 });
 
-// dá play quando aperta enter ou espaço
+// dá play quando aperta o botão, enter ou espaço
 document.addEventListener('keydown', e => {
+  if ((e.code === 'Enter' || e.code === 'Space') && !minInput.disabled && minInput.value >= 1) {
+    play();
+  }
+});
+playBtn.addEventListener('click', () => play());
+
+// foca no campo ao clicar em qualquer lugar
+document.addEventListener('click', e => {
+  if (timerOverallIsSet) {
+    minInput.focus();
+  }
+});
+
+// dá play
+function play() {
   if (!timerOverallIsSet) {
     const currentTime = new Date();
     hoursLeft = hourInputOverall.value - currentTime.getHours();
@@ -38,31 +54,23 @@ document.addEventListener('keydown', e => {
     }
   }
 
-  if ((e.code === 'Enter' || e.code === 'Space') && !minInput.disabled && minInput.value >= 1) {
-    hourOverall = +document.querySelector('#hour-input-overall').value;
-    minOverall = +document.querySelector('#min-input-overall').value;
+  hourOverall = +document.querySelector('#hour-input-overall').value;
+  minOverall = +document.querySelector('#min-input-overall').value;
 
-    min = +document.querySelector('#min-input').value - 1;
-    sec = 59;
-    hourInputOverall.value = digits(hoursLeft);
-    minInputOverall.value = digits(minsLeft);
-    totalSec = getTotalSecs();
-    timerDecrease();
-    timerOverallDecrease();
-    hourInputOverall.disabled = 'true';
-    minInputOverall.disabled = 'true';
-    timerOverallIsSet = true;
-    minInput.disabled = 'true';
-    resetBtn.classList.add('visible');
-  }
-});
-
-// foca no campo ao clicar em qualquer lugar
-document.addEventListener('click', e => {
-  if (timerOverallIsSet) {
-    minInput.focus();
-  }
-});
+  min = +document.querySelector('#min-input').value - 1;
+  sec = 59;
+  hourInputOverall.value = digits(hoursLeft);
+  minInputOverall.value = digits(minsLeft);
+  totalSec = getTotalSecs();
+  timerDecrease();
+  timerOverallDecrease();
+  hourInputOverall.disabled = 'true';
+  minInputOverall.disabled = 'true';
+  timerOverallIsSet = true;
+  minInput.disabled = 'true';
+  playBtn.classList.remove('visible');
+  resetBtn.classList.add('visible');
+}
 
 // reseta o tempo
 function resetTimer() {
@@ -70,6 +78,7 @@ function resetTimer() {
   sec = 0;
   totalSec = getTotalSecs();
   minInput.disabled = false;
+  playBtn.classList.add('visible');
   resetBtn.classList.remove('visible');
   minInput.value = '';
   bg.className = '';
@@ -92,7 +101,27 @@ function digits(time) {
   return String(time).padStart(2, '0');
 }
 
-// faz o marcador funcionar como um temporizador
+// faz o marcador de cima funcionar como um temporizador
+function timerOverallDecrease() {
+  minsLeft--;
+  var intervalOverallDecrease = setInterval(() => {
+
+    hourInputOverall.value = digits(hoursLeft);
+    minInputOverall.value = digits(minsLeft);
+
+    minsLeft--;
+    if (minsLeft < 0) {
+      hoursLeft--;
+      if (hoursLeft <= 0) {
+        clearInterval(intervalOverallDecrease);
+      } else {
+        minsLeft = 59;
+      }
+    }
+  }, 61000);
+}
+
+// faz o marcador de baixo funcionar como um temporizador
 function timerDecrease() {
   var intervalDecrease = setInterval(() => {
 
@@ -131,27 +160,7 @@ function timerDecrease() {
   })
 }
 
-// faz o marcador de cima funcionar como um temporizador
-function timerOverallDecrease() {
-  minsLeft--;
-  var intervalOverallDecrease = setInterval(() => {
-
-    hourInputOverall.value = digits(hoursLeft);
-    minInputOverall.value = digits(minsLeft);
-
-    minsLeft--;
-    if (minsLeft < 0) {
-      hoursLeft--;
-      if (hoursLeft < 0) {
-        clearInterval(intervalOverallDecrease);
-      } else {
-        minsLeft = 59;
-      }
-    }
-  }, 61000);
-}
-
-// faz o marcador funcionar como um cronômetro
+// faz o marcador de baixo funcionar como um cronômetro
 function timerIncrease() {
   min = 0;
   sec = 1;

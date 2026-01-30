@@ -73,6 +73,39 @@
   line-height: 1;
 }
 
+.display-inputs-overall .dots {
+  padding-right: 0.1em;
+}
+
+input {
+  height: 1em;
+  background: none;
+  border: solid #fff6 4px;
+  border-radius: 6px;
+  color: inherit;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: inherit;
+  padding-left: 0.01em;
+  padding-bottom: 0.15em;
+  position: relative;
+  top: 0.08em;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  &[disabled] {
+    border: none;
+  }
+}
+
 .display-inputs-overall {
   display: flex;
   color: inherit;
@@ -82,24 +115,10 @@
 
   input {
     width: 1.8em;
-    height: 1em;
-    background: none;
-    border: none;
-    color: inherit;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: inherit;
+  }
 
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    &[type="number"] {
-      -moz-appearance: textfield;
-    }
-
+  .dots {
+    padding-right: 0.1em;
   }
 }
 
@@ -166,28 +185,10 @@
 
   input {
     width: 1.66em;
-    height: 1em;
-    background: none;
-    border: none;
-    color: inherit;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: inherit;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    &[type="number"] {
-      -moz-appearance: textfield;
-    }
-
   }
 }
 
-#reset-btn {
+.btn {
   background: none;
   border: none;
   cursor: pointer;
